@@ -1,0 +1,64 @@
+#lang racket
+
+; part 1.4 conditionals
+#|
+; 1.)
+(equal? '(hi there) '(hi there))
+(equal? '(hi there) '(bye now))
+(equal? 3 3)
+(equal? 3 (+ 2 1))
+(equal? 3 3.0)
+(equal? 3 (/ 6 2))
+(equal? -1/2 -0.5)
+(eqv? '(hi there) '(hi there))
+(eqv? '(hi there) '(bye now))
+(eqv? 3 3)
+(eqv? 3 (+ 2 1))
+(eqv? 3 3.0)
+(eqv? 3 (/ 6 2))
+(eqv? -1/2 -0.5)
+(= 3 3)
+(= 3 (+ 2 1))
+(= 3 3.0)
+(= 3 (/ 6 2))
+(= -1/2 -0.5)
+; (= '(hi there) '(hi there))  ;; yes, this will give an error
+
+; 2.)
+(if (equal? -1 3)
+    9
+    10)
+
+; 3.)
+ (cond ((equal? 3 3) (+ 3 8))
+         ((equal? 16 8) 12)
+         (else (* 6 3)))
+
+
+; Part 1.5 Defining functions
+
+(lambda (x)
+  (+ x 1))
+
+(define add-one
+  (lambda (x)
+    (+ x 1)))
+
+
+
+(define a 5)
+(define b 6)
+(define c 7)
+(define strange
+  (lambda (x)
+    (let ((a 1) (b 2))
+      (+ x a b))))
+|#
+
+
+(define mystery
+  (lambda (L)
+    (if (null? L)
+        L
+        (append (mystery (cdr L))
+                (list (car L))))))
