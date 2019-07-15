@@ -1,0 +1,80 @@
+; Author: Noah
+; Date: 7-13-19
+; Class: CSCI 301
+;
+; Lab 2
+
+#lang racket
+; checks if an element is a member of a list
+; needs to be updated so that member? will return true when e is a list inside of lst
+(define member?
+  (lambda(e list)
+    ; base case list is empty
+    (if (null? list)
+        #f
+        (begin
+           (cond
+             [(and (list? e) (list? (car list))) (set-equal? e (car list))]  
+             [(equal? e (car list)) #t]
+             [else (member? e (cdr list))])))))
+
+; check if set A is a subset of set B
+(define subset?
+  (lambda (A B)
+    (if (null? A)
+        #t
+        (begin
+          (cond
+           [(member? (car A) B) (subset? (cdr A) B)]
+           [else #f])))))
+            
+; check if set's A and B are equal by checking if they are both subsets of eachother
+(define set-equal?
+  (lambda (A B)
+    (begin
+      (cond
+        [(and (subset? A B) (subset? B A)) #t]
+        [else #f]))))
+
+; return a set containing a union of two sets
+; the result of the union of two sets should contain all of the elements in each set, without any repititions
+(define union
+  (lambda (A B)
+    (if (null? B)
+        A
+        (begin
+          ;(displayln B)
+          (cond
+            ; check if first element in B is unique or not
+            [(member? (car B) A) (union A (cdr B))]
+            [else (cons (car B) (union A (cdr B)))])))))
+
+; return a list that contains all of the elements in list A and B
+(define intersect
+  (lambda (A B)
+    ; base case A and B no longer have any shared elements or A and B are no longer subsets of eachother
+    (if (or (null? A) (null? B))
+        '()
+        (begin
+          (cond
+            [(member? (car A) B) (cons (car A) (intersect (cdr A) B))]
+            [(member? (car B) A) (cons (car B) (intersect A (cdr B)))]
+            [else (intersect (cdr A) (cdr B))])))))
+
+; check if a set contains another set
+(define contains-set?
+  (lambda (L)
+    (if (null? L)
+        #f
+        (begin
+          (displayln L)
+          (cond
+            [(list? (car L)) #t]
+            [else (contains-set? (cdr L))])))))
+                    
+            
+                    
+          
+          
+    
+    
